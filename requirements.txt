@@ -1,0 +1,20 @@
+loguru
+mkdocs
+pip
+python-dotenv
+tqdm
+typer
+jupyter
+pandas
+numpy
+ccxt
+yfinance
+kaleido
+binance
+psycopg2
+sqlalchemy
+requests
+pyyaml
+matplotlib
+vectorbt
+-e .
