@@ -17,4 +17,5 @@ requests
 pyyaml
 matplotlib
 vectorbt
+quantstats
 -e .
