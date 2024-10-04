@@ -18,4 +18,6 @@ pyyaml
 matplotlib
 vectorbt
 quantstats
+riskfolio-lib
+xlwings
 -e .
