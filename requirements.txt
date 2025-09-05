@@ -21,4 +21,5 @@ quantstats
 riskfolio-lib
 xlwings
 Metatrader5
--e .
+python-dateutil
+streamlit

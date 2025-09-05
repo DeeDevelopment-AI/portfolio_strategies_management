@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from typing import Dict, Any
 from nasdaq_client import ndl_get
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def _datatable_to_df(obj: dict) -> pd.DataFrame:
     if not obj or "datatable" not in obj:
