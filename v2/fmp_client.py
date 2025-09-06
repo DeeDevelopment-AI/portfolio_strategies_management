@@ -3,8 +3,8 @@ import time, json, logging, requests, os
 from typing import Optional, Dict, Any
 from http_cache import cache_get, cache_set
 
-FMP_API_KEY = os.getenv("FMP_API_KEY", "YOUR_FMP_API_KEY")
 BASE_URL = "https://financialmodelingprep.com"
+API_ENV_KEYS = ["FMP_API_KEY", "FMP_KEY", "FMP_TOKEN"]
 RATE_LIMIT_QPS = float(os.getenv("FMP_QPS", "4"))
 
 _last=[0.0]
@@ -18,10 +18,19 @@ def _throttle():
             _t.sleep(need-dt)
     _last[0]=_t.time()
 
+def _get_api_key() -> Optional[str]:
+    """Return the first Financial Modeling Prep API key found in the environment."""
+    for k in API_ENV_KEYS:
+        v = os.getenv(k)
+        if v:
+            return v
+    return None
+
 def fmp_get(path: str, params: Optional[Dict[str, Any]] = None):
     params = params.copy() if params else {}
-    if "apikey" not in params:
-        params["apikey"]=FMP_API_KEY
+    key = _get_api_key()
+    if key and "apikey" not in params:
+        params["apikey"] = key
     url = path if path.startswith("http") else f"{BASE_URL}{path}"
     cached = cache_get("GET", url, params)
     if cached is not None:
