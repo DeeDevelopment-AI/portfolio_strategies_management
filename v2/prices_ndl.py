@@ -111,7 +111,7 @@ def get_eod_prices_ndl(symbol: str, start: str, end: str, batch_days: int = 250)
         # safety valve: avoid infinite loops
         if pages > 200:
             logging.warning("[SEP] cursor mode aborted after 200 pages for %s", symbol)
-        break
+            break
 
     if not frames:
         logging.warning("[SEP] No rows returned for %s in [%s .. %s] (both modes). "
