@@ -2,7 +2,7 @@
 import os, json, hashlib, time
 from typing import Optional, Dict, Any
 
-CACHE_DIR = os.getenv("HTTP_CACHE_DIR", "./.http_cache")
+CACHE_DIR = os.getenv("HTTP_CACHE_DIR", "utils/.http_cache")
 CACHE_TTL = int(os.getenv("HTTP_CACHE_TTL", "86400"))  # 1 día
 
 os.makedirs(CACHE_DIR, exist_ok=True)

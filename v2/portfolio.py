@@ -1,7 +1,31 @@
-# -*- coding: utf-8 -*-
-import numpy as np, pandas as pd
-def next_month_returns(m_close: pd.DataFrame)->pd.DataFrame:
-    return m_close.pct_change().shift(-1)
+"""Portfolio construction helpers."""
+
+import numpy as np
+import pandas as pd
+
+
+def next_month_returns(m_close: pd.DataFrame) -> pd.DataFrame:
+    """Compute forward one-month returns.
+
+    The previous implementation relied on ``pct_change().shift(-1)``. In some
+    scenarios (e.g. integer-typed data or unsorted indices) this produced
+    arrays of zeros because the percentage change was evaluated *before* the
+    shift.  By explicitly shifting the close prices forward and then dividing by
+    the current prices we avoid those edge cases and always obtain the return
+    for the next period aligned with the starting month.
+
+    Parameters
+    ----------
+    m_close : pd.DataFrame
+        Monthly close prices indexed by date.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame of next month's returns with the same shape as ``m_close``.
+    """
+
+    return m_close.shift(-1).divide(m_close) - 1
 def beta_rolling_daily(df_close: pd.DataFrame, mkt_close: pd.Series, window: int=252)->pd.DataFrame:
     rets = df_close.pct_change(); mret = mkt_close.pct_change()
     betas = pd.DataFrame(index=df_close.index, columns=df_close.columns, dtype=float)
