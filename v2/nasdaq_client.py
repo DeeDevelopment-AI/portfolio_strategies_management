@@ -9,8 +9,8 @@ API_ENV_KEYS = ["NDL_API_KEY", "NASDAQ_API_KEY", "QUANDL_API_KEY"]
 def _get_api_key() -> Optional[str]:
     for k in API_ENV_KEYS:
         v = os.getenv(k)
-    if v:
-        return v
+        if v:
+            return v
     return None
 
 def ndl_get(path: str, params: Optional[Dict[str, Any]] = None) -> Optional[Any]:
